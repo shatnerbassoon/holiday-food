@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+    font-family: -apple-system;
+    padding: 15px;
+    background: #f2f2f7;
+}
+h1 {
+    margin-bottom: 10px;
+}
+h2 {
+    margin-top: 25px;
+}
+details {
+    margin-bottom: 10px;
+    background: white;
+    padding: 12px;
+    border-radius: 12px;
+}
+summary {
+    font-size: 17px;
+    font-weight: 600;
+}
+.meal {
+    margin-left: 10px;
+}
+.stats {
+    font-size: 14px;
+    margin-top: 5px;
+}
+textarea {
+    width: 100%;
+    height: 120px;
+    margin-top: 10px;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+.section {
+    background: white;
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+</style>
+</head>
+<body>
+
+<h1>🥗 Healthy Eating Plan</h1>
+
+<div class="section">
+<h2>📝 Food Diary</h2>
+
+<h3>Land Notes</h3>
+<textarea id="landDiary" placeholder="What did I actually eat on land..."></textarea>
+
+<h3>Cruise Notes</h3>
+<textarea id="cruiseDiary" placeholder="What did I eat on the cruise..."></textarea>
+</div>
+<h2>Land</h2>
+        <details>
+            <summary>Italian Bistro</summary>
+        
+            <details class="meal">
+                <summary>Grilled Sea Bass</summary>
+                <div class="stats">
+            Calories: 450<br>Fat: 18g<br><span style='color:green'>Sat Fat: 3g</span><br>Protein: 40g<br>Fibre: 4g<br>Carbs: 20g<br>Sugar: 3g<br>
+                </div>
+            </details>
+            </details><h2>Cruise</h2>
+        <details>
+            <summary>Main Dining Room</summary>
+        
+            <details class="meal">
+                <summary>Grilled Salmon</summary>
+                <div class="stats">
+            Calories: 500<br>Fat: 22g<br><span style='color:green'>Sat Fat: 4g</span><br>Protein: 42g<br>Fibre: 3g<br>Carbs: 18g<br>Sugar: 2g<br>
+                </div>
+            </details>
+            </details>
+<script>
+function setupDiary(id, key) {
+  const el = document.getElementById(id);
+  el.value = localStorage.getItem(key) || "";
+  el.addEventListener("input", () => {
+    localStorage.setItem(key, el.value);
+  });
+}
+
+setupDiary("landDiary", "landNotes");
+setupDiary("cruiseDiary", "cruiseNotes");
+</script>
+
+</body>
+</html>
