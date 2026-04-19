@@ -1,5 +1,5 @@
 data = {
-    "Land": [
+    "Land Restaurants": [
         {
             "name": "Italian Bistro",
             "meals": [
@@ -18,7 +18,7 @@ data = {
             ]
         }
     ],
-    "Cruise": [
+    "Cruise Restaurants": [
         {
             "name": "Main Dining Room",
             "meals": [
@@ -39,11 +39,22 @@ data = {
     ]
 }
 
+days = [
+    "Day 1 – Travel",
+    "Day 2 – Rome",
+    "Day 3 – Florence",
+    "Day 4 – Cruise Embarkation",
+    "Day 5 – At Sea"
+]
+
 html = """
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+
 <style>
 body {
     font-family: -apple-system;
@@ -87,6 +98,8 @@ textarea {
     padding: 12px;
     border-radius: 12px;
     margin-bottom: 15px;
+    max-height: 400px;
+    overflow-y: auto;
 }
 </style>
 </head>
@@ -95,7 +108,7 @@ textarea {
 <h1>🥗 Healthy Eating Plan</h1>
 
 <div class="section">
-<h2>📝 Food Diary</h2>
+<h2>📝 General Notes</h2>
 
 <h3>Land Notes</h3>
 <textarea id="landDiary" placeholder="What did I actually eat on land..."></textarea>
@@ -105,6 +118,7 @@ textarea {
 </div>
 """
 
+# Restaurant sections
 for category, restaurants in data.items():
     html += f"<h2>{category}</h2>"
 
@@ -136,18 +150,42 @@ for category, restaurants in data.items():
 
         html += "</details>"
 
+# Daily diary section
+html += """
+<div class="section">
+<h2>📅 Daily Diary</h2>
+"""
+
+for i, day in enumerate(days):
+    html += f"""
+    <details>
+        <summary>{day}</summary>
+        <textarea id="day{i}" placeholder="What did I eat today..."></textarea>
+    </details>
+    """
+
+html += "</div>"
+
+# JavaScript for saving notes
 html += """
 <script>
 function setupDiary(id, key) {
   const el = document.getElementById(id);
+  if (!el) return;
   el.value = localStorage.getItem(key) || "";
   el.addEventListener("input", () => {
     localStorage.setItem(key, el.value);
   });
 }
 
+// General notes
 setupDiary("landDiary", "landNotes");
 setupDiary("cruiseDiary", "cruiseNotes");
+
+// Daily notes
+for (let i = 0; i < 30; i++) {
+  setupDiary("day" + i, "day" + i);
+}
 </script>
 
 </body>

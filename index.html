@@ -2,7 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+
 <style>
 body {
     font-family: -apple-system;
@@ -46,6 +49,8 @@ textarea {
     padding: 12px;
     border-radius: 12px;
     margin-bottom: 15px;
+    max-height: 400px;
+    overflow-y: auto;
 }
 </style>
 </head>
@@ -54,7 +59,7 @@ textarea {
 <h1>🥗 Healthy Eating Plan</h1>
 
 <div class="section">
-<h2>📝 Food Diary</h2>
+<h2>📝 General Notes</h2>
 
 <h3>Land Notes</h3>
 <textarea id="landDiary" placeholder="What did I actually eat on land..."></textarea>
@@ -62,7 +67,7 @@ textarea {
 <h3>Cruise Notes</h3>
 <textarea id="cruiseDiary" placeholder="What did I eat on the cruise..."></textarea>
 </div>
-<h2>Land</h2>
+<h2>Land Restaurants</h2>
         <details>
             <summary>Italian Bistro</summary>
         
@@ -72,7 +77,7 @@ textarea {
             Calories: 450<br>Fat: 18g<br><span style='color:green'>Sat Fat: 3g</span><br>Protein: 40g<br>Fibre: 4g<br>Carbs: 20g<br>Sugar: 3g<br>
                 </div>
             </details>
-            </details><h2>Cruise</h2>
+            </details><h2>Cruise Restaurants</h2>
         <details>
             <summary>Main Dining Room</summary>
         
@@ -83,17 +88,52 @@ textarea {
                 </div>
             </details>
             </details>
+<div class="section">
+<h2>📅 Daily Diary</h2>
+
+    <details>
+        <summary>Day 1 – Travel</summary>
+        <textarea id="day0" placeholder="What did I eat today..."></textarea>
+    </details>
+    
+    <details>
+        <summary>Day 2 – Rome</summary>
+        <textarea id="day1" placeholder="What did I eat today..."></textarea>
+    </details>
+    
+    <details>
+        <summary>Day 3 – Florence</summary>
+        <textarea id="day2" placeholder="What did I eat today..."></textarea>
+    </details>
+    
+    <details>
+        <summary>Day 4 – Cruise Embarkation</summary>
+        <textarea id="day3" placeholder="What did I eat today..."></textarea>
+    </details>
+    
+    <details>
+        <summary>Day 5 – At Sea</summary>
+        <textarea id="day4" placeholder="What did I eat today..."></textarea>
+    </details>
+    </div>
 <script>
 function setupDiary(id, key) {
   const el = document.getElementById(id);
+  if (!el) return;
   el.value = localStorage.getItem(key) || "";
   el.addEventListener("input", () => {
     localStorage.setItem(key, el.value);
   });
 }
 
+// General notes
 setupDiary("landDiary", "landNotes");
 setupDiary("cruiseDiary", "cruiseNotes");
+
+// Daily notes
+for (let i = 0; i < 30; i++) {
+  setupDiary("day" + i, "day" + i);
+}
 </script>
 
 </body>
