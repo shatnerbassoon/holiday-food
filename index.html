@@ -7,25 +7,30 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --sand: #f5ede0;
-    --sand-dark: #e8d9c4;
-    --terracotta: #c8603a;
-    --terracotta-light: #e8896a;
-    --olive: #6b7c4f;
-    --olive-light: #8fa068;
-    --ink: #2a2118;
-    --ink-muted: #7a6e62;
-    --cream: #fdf8f2;
+    --navy: #0e1a4a;        /* deep Disney midnight navy */
+    --navy-mid: #162670;    /* mid navy for panels */
+    --disney-blue: #113CCF; /* classic Disney blue */
+    --disney-blue-light: #4a6ee0;
+    --sky: #BFF5FD;         /* Disney sky blue */
+    --gold: #FFD911;        /* Disney gold/yellow */
+    --gold-dark: #d4ae00;
+    --red: #F51B18;         /* Disney red */
+    --ink: #0a1235;
+    --ink-muted: #7a8ab0;
+    --surface: #f0f4ff;     /* very light blue-white */
+    --card: #ffffff;
     --white: #ffffff;
-    --shadow: 0 2px 12px rgba(42,33,24,0.10);
-    --shadow-lg: 0 6px 30px rgba(42,33,24,0.14);
+    --border: #c8d4f0;
+    --border-open: var(--disney-blue);
+    --shadow: 0 2px 14px rgba(14,26,74,0.13);
+    --shadow-lg: 0 6px 30px rgba(14,26,74,0.18);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     font-family: 'DM Sans', sans-serif;
-    background: var(--sand);
+    background: linear-gradient(160deg, #0e1a4a 0%, #162670 60%, #1a3080 100%);
     color: var(--ink);
     min-height: 100vh;
     padding: 24px 16px 60px;
@@ -60,20 +65,21 @@
     font-family: 'Fraunces', serif;
     font-weight: 700;
     font-size: 1.9rem;
-    color: var(--terracotta);
+    color: var(--gold);
     letter-spacing: -0.5px;
     line-height: 1.1;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
   }
 
   header p {
     font-size: 0.85rem;
-    color: var(--ink-muted);
+    color: var(--sky);
     margin-top: 4px;
     font-weight: 300;
   }
 
   .panel {
-    background: var(--cream);
+    background: var(--card);
     border-radius: 18px;
     box-shadow: var(--shadow);
     margin-bottom: 20px;
@@ -85,14 +91,15 @@
     align-items: center;
     gap: 8px;
     padding: 16px 18px 12px;
-    border-bottom: 1px solid var(--sand-dark);
+    background: var(--navy);
+    border-bottom: 1px solid var(--navy-mid);
   }
 
   .panel-header h2 {
     font-family: 'Fraunces', serif;
     font-weight: 500;
     font-size: 1.15rem;
-    color: var(--ink);
+    color: var(--gold);
   }
 
   .panel-header .icon {
@@ -106,7 +113,7 @@
     gap: 10px;
     padding: 14px 18px;
     flex-wrap: wrap;
-    background: var(--sand);
+    background: var(--surface);
   }
 
   .date-field {
@@ -128,8 +135,8 @@
     width: 100%;
     padding: 8px 10px;
     border-radius: 10px;
-    border: 1.5px solid var(--sand-dark);
-    background: var(--cream);
+    border: 1.5px solid var(--border);
+    background: var(--card);
     font-family: 'DM Sans', sans-serif;
     font-size: 0.85rem;
     color: var(--ink);
@@ -138,7 +145,7 @@
   }
 
   .date-field input[type="date"]:focus {
-    border-color: var(--terracotta);
+    border-color: var(--disney-blue);
   }
 
   .btn {
@@ -157,25 +164,25 @@
   }
 
   .btn-primary {
-    background: var(--terracotta);
+    background: var(--disney-blue);
     color: white;
   }
-  .btn-primary:hover { background: #b55330; }
+  .btn-primary:hover { background: var(--disney-blue-light); }
 
   .btn-secondary {
-    background: var(--sand-dark);
+    background: var(--border);
     color: var(--ink);
   }
-  .btn-secondary:hover { background: #d9c8b0; }
+  .btn-secondary:hover { background: #b0c0e8; }
 
   .btn-ghost {
     background: transparent;
-    color: var(--olive);
+    color: var(--disney-blue);
     padding: 5px 10px;
     font-size: 0.78rem;
-    border: 1.5px dashed var(--olive-light);
+    border: 1.5px dashed var(--disney-blue-light);
   }
-  .btn-ghost:hover { background: rgba(107,124,79,0.08); }
+  .btn-ghost:hover { background: rgba(17,60,207,0.07); }
 
   /* Scrollable days area */
   .days-scroll {
@@ -186,18 +193,18 @@
 
   .days-scroll::-webkit-scrollbar { width: 4px; }
   .days-scroll::-webkit-scrollbar-track { background: transparent; }
-  .days-scroll::-webkit-scrollbar-thumb { background: var(--sand-dark); border-radius: 4px; }
+  .days-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
   /* Day card */
   .day-card {
     border-radius: 12px;
-    border: 1.5px solid var(--sand-dark);
+    border: 1.5px solid var(--border);
     margin-bottom: 8px;
     overflow: hidden;
     transition: border-color 0.2s;
   }
 
-  .day-card.open { border-color: var(--terracotta-light); }
+  .day-card.open { border-color: var(--disney-blue); }
 
   .day-summary {
     display: flex;
@@ -206,7 +213,7 @@
     padding: 11px 14px;
     cursor: pointer;
     user-select: none;
-    background: var(--cream);
+    background: var(--surface);
     list-style: none;
   }
 
@@ -215,24 +222,25 @@
   .day-dot {
     width: 8px; height: 8px;
     border-radius: 50%;
-    background: var(--sand-dark);
+    background: var(--border);
     flex-shrink: 0;
     transition: background 0.2s;
   }
 
-  .day-card.open .day-dot { background: var(--terracotta); }
+  .day-card.open .day-dot { background: var(--gold); }
 
   .day-label {
     flex: 1;
     font-family: 'Fraunces', serif;
     font-size: 0.95rem;
     font-weight: 500;
+    color: var(--ink);
   }
 
   .day-cal-badge {
     font-size: 0.72rem;
-    color: var(--ink-muted);
-    font-weight: 400;
+    color: var(--disney-blue);
+    font-weight: 500;
   }
 
   .day-chevron {
@@ -246,8 +254,8 @@
   .day-body {
     display: none;
     padding: 10px 14px 14px;
-    background: var(--white);
-    border-top: 1px solid var(--sand-dark);
+    background: var(--card);
+    border-top: 1px solid var(--border);
   }
 
   .day-card.open .day-body { display: block; }
@@ -256,7 +264,7 @@
   .food-list { margin-bottom: 10px; }
 
   .food-item {
-    background: var(--cream);
+    background: var(--surface);
     border-radius: 10px;
     padding: 12px;
     margin-bottom: 8px;
@@ -277,13 +285,13 @@
     font-weight: 500;
     padding: 6px 8px;
     border-radius: 8px;
-    border: 1.5px solid var(--sand-dark);
-    background: var(--white);
+    border: 1.5px solid var(--border);
+    background: var(--card);
     color: var(--ink);
     outline: none;
     transition: border-color 0.15s;
   }
-  .food-name-row input:focus { border-color: var(--terracotta); }
+  .food-name-row input:focus { border-color: var(--disney-blue); }
 
   .btn-remove {
     background: none;
@@ -296,7 +304,7 @@
     line-height: 1;
     transition: color 0.15s;
   }
-  .btn-remove:hover { color: var(--terracotta); }
+  .btn-remove:hover { color: var(--red); }
 
   .nutrient-grid {
     display: grid;
@@ -322,8 +330,8 @@
   .nutrient-field input {
     padding: 5px 6px;
     border-radius: 7px;
-    border: 1.5px solid var(--sand-dark);
-    background: var(--white);
+    border: 1.5px solid var(--border);
+    background: var(--card);
     font-family: 'DM Sans', sans-serif;
     font-size: 0.8rem;
     color: var(--ink);
@@ -332,14 +340,14 @@
     transition: border-color 0.15s;
   }
 
-  .nutrient-field input:focus { border-color: var(--terracotta); }
+  .nutrient-field input:focus { border-color: var(--disney-blue); }
 
   .food-notes {
     width: 100%;
     padding: 6px 8px;
     border-radius: 8px;
-    border: 1.5px solid var(--sand-dark);
-    background: var(--white);
+    border: 1.5px solid var(--border);
+    background: var(--card);
     font-family: 'DM Sans', sans-serif;
     font-size: 0.78rem;
     color: var(--ink);
@@ -348,8 +356,8 @@
     min-height: 44px;
     transition: border-color 0.15s;
   }
-  .food-notes:focus { border-color: var(--terracotta); }
-  .food-notes::placeholder { color: #b0a898; }
+  .food-notes:focus { border-color: var(--disney-blue); }
+  .food-notes::placeholder { color: #a0aac8; }
 
   /* Restaurants panel */
   .restaurants-scroll {
@@ -360,35 +368,35 @@
 
   .restaurants-scroll::-webkit-scrollbar { width: 4px; }
   .restaurants-scroll::-webkit-scrollbar-track { background: transparent; }
-  .restaurants-scroll::-webkit-scrollbar-thumb { background: var(--sand-dark); border-radius: 4px; }
+  .restaurants-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
   .restaurant-card {
     border-radius: 12px;
-    border: 1.5px solid var(--sand-dark);
+    border: 1.5px solid var(--border);
     margin-bottom: 8px;
     overflow: hidden;
   }
 
-  .restaurant-card.open { border-color: var(--olive-light); }
+  .restaurant-card.open { border-color: var(--disney-blue); }
 
   .restaurant-header {
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 10px 12px;
-    background: var(--cream);
+    background: var(--surface);
     cursor: pointer;
   }
 
   .restaurant-dot {
     width: 8px; height: 8px;
     border-radius: 50%;
-    background: var(--sand-dark);
+    background: var(--border);
     flex-shrink: 0;
     transition: background 0.2s;
   }
 
-  .restaurant-card.open .restaurant-dot { background: var(--olive); }
+  .restaurant-card.open .restaurant-dot { background: var(--gold); }
 
   .restaurant-name-input {
     flex: 1;
@@ -404,7 +412,7 @@
 
   .restaurant-name-input:focus {
     cursor: text;
-    background: var(--white);
+    background: var(--card);
     border-radius: 6px;
     padding: 2px 6px;
   }
@@ -412,8 +420,8 @@
   .restaurant-body {
     display: none;
     padding: 10px 14px 14px;
-    background: var(--white);
-    border-top: 1px solid var(--sand-dark);
+    background: var(--card);
+    border-top: 1px solid var(--border);
   }
 
   .restaurant-card.open .restaurant-body { display: block; }
@@ -429,15 +437,15 @@
     flex: 1;
     padding: 7px 10px;
     border-radius: 8px;
-    border: 1.5px solid var(--sand-dark);
-    background: var(--cream);
+    border: 1.5px solid var(--border);
+    background: var(--surface);
     font-family: 'DM Sans', sans-serif;
     font-size: 0.85rem;
     color: var(--ink);
     outline: none;
     transition: border-color 0.15s;
   }
-  .meal-item input:focus { border-color: var(--olive); }
+  .meal-item input:focus { border-color: var(--disney-blue); }
 
   .empty-state {
     text-align: center;
@@ -452,8 +460,8 @@
     width: 100%;
     padding: 6px 8px;
     border-radius: 8px;
-    border: 1.5px solid var(--sand-dark);
-    background: var(--cream);
+    border: 1.5px solid var(--border);
+    background: var(--surface);
     font-family: 'DM Sans', sans-serif;
     font-size: 0.78rem;
     color: var(--ink);
@@ -463,8 +471,8 @@
     margin-bottom: 10px;
     transition: border-color 0.15s;
   }
-  .restaurant-notes:focus { border-color: var(--olive); }
-  .restaurant-notes::placeholder { color: #b0a898; }
+  .restaurant-notes:focus { border-color: var(--disney-blue); }
+  .restaurant-notes::placeholder { color: #a0aac8; }
 
   .restaurant-actions {
     display: flex;
@@ -502,7 +510,7 @@
 
   /* Export panel */
   .export-panel {
-    background: var(--cream);
+    background: var(--card);
     border-radius: 18px;
     box-shadow: var(--shadow);
     margin-bottom: 20px;
@@ -532,8 +540,8 @@
   }
 
   .btn-export {
-    background: var(--olive);
-    color: white;
+    background: var(--navy);
+    color: var(--gold);
     padding: 9px 18px;
     border-radius: 10px;
     border: none;
@@ -546,11 +554,29 @@
     gap: 6px;
     transition: background 0.15s;
   }
-  .btn-export:hover { background: #576840; }
+  .btn-export:hover { background: var(--navy-mid); }
 
   .panel-add-row {
     padding: 0 12px 14px;
   }
+
+  .btn-delete-restaurant {
+    background: none;
+    border: 1.5px solid #f0c8c8;
+    color: #c03030;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-delete-restaurant:hover {
+    background: #fff0f0;
+    border-color: var(--red);
+    color: var(--red);
+  }
+
 </style>
 </head>
 <body>
@@ -598,8 +624,8 @@
     </svg>
 
     <div class="header-text">
-      <h1>Holiday Food Diary</h1>
-      <p>Track meals &amp; restaurants on your trip</p>
+      <h1>Disney Food Diary</h1>
+      <p>The Fattiest Place On Earth</p>
     </div>
 
     <!-- Cruise ship (right) -->
