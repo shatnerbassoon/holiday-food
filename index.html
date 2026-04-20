@@ -36,10 +36,30 @@
     margin-bottom: 28px;
   }
 
+  .header-art {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .header-svg {
+    flex-shrink: 0;
+    width: 90px;
+    height: 80px;
+    overflow: visible;
+  }
+
+  .header-text {
+    flex: 1;
+    text-align: center;
+    padding-bottom: 4px;
+  }
+
   header h1 {
     font-family: 'Fraunces', serif;
     font-weight: 700;
-    font-size: 2.2rem;
+    font-size: 1.9rem;
     color: var(--terracotta);
     letter-spacing: -0.5px;
     line-height: 1.1;
@@ -428,6 +448,106 @@
 
   .empty-state .big { font-size: 2rem; display: block; margin-bottom: 8px; }
 
+  .restaurant-notes {
+    width: 100%;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1.5px solid var(--sand-dark);
+    background: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    color: var(--ink);
+    outline: none;
+    resize: vertical;
+    min-height: 44px;
+    margin-bottom: 10px;
+    transition: border-color 0.15s;
+  }
+  .restaurant-notes:focus { border-color: var(--olive); }
+  .restaurant-notes::placeholder { color: #b0a898; }
+
+  .restaurant-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 6px;
+  }
+
+  .btn-delete-restaurant {
+    background: none;
+    border: 1.5px solid #e0c4c4;
+    color: #b05050;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-delete-restaurant:hover {
+    background: #fdf0f0;
+    border-color: var(--terracotta);
+    color: var(--terracotta);
+  }
+
+  .restaurant-notes-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--ink-muted);
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  /* Export panel */
+  .export-panel {
+    background: var(--cream);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .export-panel .export-text {
+    flex: 1;
+    min-width: 160px;
+  }
+
+  .export-panel h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .export-panel p {
+    font-size: 0.75rem;
+    color: var(--ink-muted);
+    margin-top: 2px;
+  }
+
+  .btn-export {
+    background: var(--olive);
+    color: white;
+    padding: 9px 18px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s;
+  }
+  .btn-export:hover { background: #576840; }
+
   .panel-add-row {
     padding: 0 12px 14px;
   }
@@ -436,8 +556,99 @@
 <body>
 
 <header>
-  <h1>🌴 Holiday Food Diary</h1>
-  <p>Track meals & restaurants on your trip</p>
+  <div class="header-art">
+    <!-- Fairy tale castle (left) -->
+    <svg class="header-svg castle-svg" viewBox="0 0 110 100" xmlns="http://www.w3.org/2000/svg">
+      <!-- Main towers -->
+      <rect x="10" y="45" width="20" height="50" fill="#b5779a"/>
+      <rect x="40" y="30" width="30" height="65" fill="#c98ab0"/>
+      <rect x="80" y="45" width="20" height="50" fill="#b5779a"/>
+      <!-- Tower tops (battlements) -->
+      <rect x="8" y="38" width="6" height="8" fill="#9a5f86" rx="1"/>
+      <rect x="16" y="38" width="6" height="8" fill="#9a5f86" rx="1"/>
+      <rect x="24" y="38" width="6" height="8" fill="#9a5f86" rx="1"/>
+      <rect x="38" y="22" width="7" height="9" fill="#9a5f86" rx="1"/>
+      <rect x="47" y="22" width="7" height="9" fill="#9a5f86" rx="1"/>
+      <rect x="56" y="22" width="7" height="9" fill="#9a5f86" rx="1"/>
+      <rect x="65" y="22" width="7" height="9" fill="#9a5f86" rx="1"/>
+      <rect x="78" y="38" width="6" height="8" fill="#9a5f86" rx="1"/>
+      <rect x="86" y="38" width="6" height="8" fill="#9a5f86" rx="1"/>
+      <rect x="94" y="38" width="6" height="8" fill="#9a5f86" rx="1"/>
+      <!-- Pointy roofs / spires -->
+      <polygon points="20,5 13,38 27,38" fill="#e05a7a"/>
+      <polygon points="55,0 44,22 66,22" fill="#e05a7a"/>
+      <polygon points="90,5 83,38 97,38" fill="#e05a7a"/>
+      <!-- Flags -->
+      <line x1="20" y1="5" x2="20" y2="0" stroke="#7a4060" stroke-width="1.2"/>
+      <polygon points="20,0 28,3 20,6" fill="#ffd700"/>
+      <line x1="55" y1="0" x2="55" y2="-5" stroke="#7a4060" stroke-width="1.2"/>
+      <polygon points="55,-5 64,-2 55,1" fill="#ffd700"/>
+      <!-- Windows -->
+      <rect x="17" y="52" width="6" height="8" rx="3" fill="#fde68a"/>
+      <rect x="83" y="52" width="6" height="8" rx="3" fill="#fde68a"/>
+      <rect x="49" y="38" width="7" height="10" rx="3.5" fill="#fde68a"/>
+      <rect x="49" y="55" width="7" height="10" rx="3.5" fill="#fde68a"/>
+      <!-- Arched doorway -->
+      <rect x="47" y="78" width="16" height="17" rx="8" fill="#7a4060"/>
+      <!-- Wall connecting towers -->
+      <rect x="30" y="60" width="10" height="35" fill="#b5779a"/>
+      <rect x="70" y="60" width="10" height="35" fill="#b5779a"/>
+      <!-- Ground -->
+      <rect x="0" y="95" width="110" height="5" rx="2" fill="#8fa068" opacity="0.5"/>
+    </svg>
+
+    <div class="header-text">
+      <h1>Holiday Food Diary</h1>
+      <p>Track meals &amp; restaurants on your trip</p>
+    </div>
+
+    <!-- Cruise ship (right) -->
+    <svg class="header-svg ship-svg" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+      <!-- Sea -->
+      <ellipse cx="60" cy="92" rx="58" ry="8" fill="#4a90c4" opacity="0.25"/>
+      <!-- Hull -->
+      <path d="M10,70 L110,70 L100,90 L20,90 Z" fill="#1a3a6b"/>
+      <!-- Hull stripe -->
+      <rect x="10" y="70" width="100" height="5" fill="#e63030"/>
+      <!-- Superstructure levels -->
+      <rect x="25" y="45" width="70" height="25" rx="2" fill="#f0f4f8"/>
+      <rect x="32" y="28" width="56" height="18" rx="2" fill="#e8eef4"/>
+      <rect x="40" y="16" width="40" height="13" rx="2" fill="#dce6f0"/>
+      <!-- Portholes (hull) -->
+      <circle cx="35" cy="80" r="4" fill="#2563a8" stroke="white" stroke-width="1.2"/>
+      <circle cx="50" cy="80" r="4" fill="#2563a8" stroke="white" stroke-width="1.2"/>
+      <circle cx="65" cy="80" r="4" fill="#2563a8" stroke="white" stroke-width="1.2"/>
+      <circle cx="80" cy="80" r="4" fill="#2563a8" stroke="white" stroke-width="1.2"/>
+      <!-- Windows row 1 -->
+      <rect x="30" y="51" width="8" height="6" rx="1" fill="#b8d4f0"/>
+      <rect x="42" y="51" width="8" height="6" rx="1" fill="#b8d4f0"/>
+      <rect x="54" y="51" width="8" height="6" rx="1" fill="#b8d4f0"/>
+      <rect x="66" y="51" width="8" height="6" rx="1" fill="#b8d4f0"/>
+      <rect x="78" y="51" width="8" height="6" rx="1" fill="#b8d4f0"/>
+      <!-- Windows row 2 -->
+      <rect x="36" y="33" width="7" height="5" rx="1" fill="#c8dff5"/>
+      <rect x="47" y="33" width="7" height="5" rx="1" fill="#c8dff5"/>
+      <rect x="58" y="33" width="7" height="5" rx="1" fill="#c8dff5"/>
+      <rect x="69" y="33" width="7" height="5" rx="1" fill="#c8dff5"/>
+      <!-- Funnel / chimney -->
+      <rect x="52" y="6" width="16" height="12" rx="3" fill="#e63030"/>
+      <rect x="54" y="3" width="12" height="5" rx="2" fill="#cc2020"/>
+      <!-- Smoke puffs -->
+      <circle cx="60" cy="1" r="3" fill="#ccc" opacity="0.6"/>
+      <circle cx="65" cy="-2" r="2" fill="#ccc" opacity="0.4"/>
+      <!-- Flag on mast -->
+      <line x1="60" y1="6" x2="60" y2="-8" stroke="#555" stroke-width="1.2"/>
+      <!-- French tricolore: blue, white, red -->
+      <rect x="60" y="-8" width="4" height="8" fill="#002395"/>
+      <rect x="64" y="-8" width="4" height="8" fill="#ffffff"/>
+      <rect x="68" y="-8" width="4" height="8" fill="#ED2939"/>
+      <!-- Anchor decoration on hull -->
+      <text x="54" y="87" font-size="8" fill="white" opacity="0.5">⚓</text>
+      <!-- Wake lines -->
+      <path d="M5,88 Q20,84 35,88" stroke="white" stroke-width="1.5" fill="none" opacity="0.5"/>
+      <path d="M85,88 Q100,84 115,88" stroke="white" stroke-width="1.5" fill="none" opacity="0.5"/>
+    </svg>
+  </div>
 </header>
 
 <!-- Daily Diary Panel -->
@@ -484,6 +695,15 @@
   <div class="panel-add-row">
     <button class="btn btn-ghost" onclick="addRestaurant()">＋ Add Restaurant</button>
   </div>
+</div>
+
+<!-- Export Panel -->
+<div class="export-panel">
+  <div class="export-text">
+    <h3>📥 Export Diary</h3>
+    <p>Save all diary data as a JSON file</p>
+  </div>
+  <button class="btn-export" onclick="exportJSON()">⬇ Download JSON</button>
 </div>
 
 <script>
@@ -641,10 +861,9 @@ function updateCalBadge(dayIndex, foods) {
 // ===== RESTAURANTS =====
 function addRestaurant() {
   const data = load("restaurants", []);
-  data.push({ name: "", meals: [] });
+  data.push({ name: "", notes: "", meals: [] });
   save("restaurants", data);
   renderRestaurants();
-  // Open the new one
   setTimeout(() => {
     const cards = document.querySelectorAll('.restaurant-card');
     if (cards.length) cards[cards.length - 1].classList.add('open');
@@ -666,17 +885,23 @@ function renderRestaurants() {
         <div class="restaurant-dot"></div>
         <input class="restaurant-name-input" placeholder="Restaurant name"
           value="${esc(r.name || '')}"
-          onchange="updateRestaurant(${i}, this.value)"
-          oninput="updateRestaurant(${i}, this.value)"
+          onchange="updateRestaurantField(${i},'name',this.value)"
+          oninput="updateRestaurantField(${i},'name',this.value)"
           onclick="event.stopPropagation()">
-        <button class="btn-remove" onclick="event.stopPropagation(); removeRestaurant(${i})" title="Remove">✕</button>
         <span class="day-chevron">▼</span>
       </div>
       <div class="restaurant-body">
+        <label class="restaurant-notes-label">Notes</label>
+        <textarea class="restaurant-notes" placeholder="Address, cuisine, rating, thoughts…"
+          onchange="updateRestaurantField(${i},'notes',this.value)"
+          oninput="updateRestaurantField(${i},'notes',this.value)">${esc(r.notes || '')}</textarea>
         <div class="meal-list" id="meal-list-${i}">
           ${r.meals.map((m, j) => renderMealItem(i, j, m)).join('')}
         </div>
-        <button class="btn btn-ghost" onclick="addMeal(${i})">＋ Add Meal</button>
+        <div class="restaurant-actions">
+          <button class="btn btn-ghost" onclick="addMeal(${i})">＋ Add Meal</button>
+          <button class="btn-delete-restaurant" onclick="removeRestaurant(${i})">🗑 Delete restaurant</button>
+        </div>
       </div>
     </div>`).join('');
 }
@@ -711,10 +936,14 @@ function removeMeal(restIndex, mealIndex) {
     data[restIndex].meals.map((m, j) => renderMealItem(restIndex, j, m)).join('');
 }
 
-function updateRestaurant(i, value) {
+function updateRestaurantField(i, field, value) {
   const data = load("restaurants", []);
-  data[i].name = value;
+  data[i][field] = value;
   save("restaurants", data);
+}
+
+function updateRestaurant(i, value) {
+  updateRestaurantField(i, 'name', value);
 }
 
 function removeRestaurant(i) {
@@ -733,6 +962,33 @@ function updateMeal(i, j, value) {
 // ===== UTILS =====
 function esc(str) {
   return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ===== EXPORT =====
+function exportJSON() {
+  const tripDates = load("tripDates", null);
+  const days = load("days", []);
+  const restaurants = load("restaurants", []);
+
+  const exportData = {
+    exported: new Date().toISOString(),
+    trip: tripDates,
+    days,
+    restaurants
+  };
+
+  const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const filename = tripDates
+    ? `holiday-diary-${tripDates.start}-to-${tripDates.end}.json`
+    : `holiday-diary-${new Date().toISOString().slice(0,10)}.json`;
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 // ===== INIT =====
