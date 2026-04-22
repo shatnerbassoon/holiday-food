@@ -577,6 +577,127 @@
     color: var(--red);
   }
 
+  /* Shopping lists panel */
+  .shops-scroll {
+    max-height: 420px;
+    overflow-y: auto;
+    padding: 10px 12px 14px;
+  }
+
+  .shops-scroll::-webkit-scrollbar { width: 4px; }
+  .shops-scroll::-webkit-scrollbar-track { background: transparent; }
+  .shops-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .store-card {
+    border-radius: 12px;
+    border: 1.5px solid var(--border);
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+
+  .store-card.open { border-color: var(--disney-blue); }
+
+  .store-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: var(--surface);
+    cursor: pointer;
+  }
+
+  .store-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+
+  .store-card.open .store-dot { background: var(--gold); }
+
+  .store-name-input {
+    flex: 1;
+    font-family: 'Fraunces', serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: none;
+    background: transparent;
+    color: var(--ink);
+    outline: none;
+    cursor: pointer;
+  }
+
+  .store-name-input:focus {
+    cursor: text;
+    background: var(--card);
+    border-radius: 6px;
+    padding: 2px 6px;
+  }
+
+  .store-body {
+    display: none;
+    padding: 10px 14px 14px;
+    background: var(--card);
+    border-top: 1px solid var(--border);
+  }
+
+  .store-card.open .store-body { display: block; }
+
+  .shop-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .shop-item-check {
+    width: 18px; height: 18px;
+    flex-shrink: 0;
+    accent-color: var(--disney-blue);
+    cursor: pointer;
+  }
+
+  .shop-item input[type="text"] {
+    flex: 1;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s, text-decoration 0.15s;
+  }
+
+  .shop-item input[type="text"]:focus { border-color: var(--disney-blue); }
+  .shop-item input[type="text"].checked { text-decoration: line-through; color: var(--ink-muted); }
+
+  .store-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 6px;
+  }
+
+  .btn-delete-store {
+    background: none;
+    border: 1.5px solid #f0c8c8;
+    color: #c03030;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-delete-store:hover {
+    background: #fff0f0;
+    border-color: var(--red);
+    color: var(--red);
+  }
+
 </style>
 </head>
 <body>
@@ -624,8 +745,8 @@
     </svg>
 
     <div class="header-text">
-      <h1>Disney Food Diary</h1>
-      <p>The Fattiest Place On Earth</p>
+      <h1>Holiday Food Diary</h1>
+      <p>Track meals &amp; restaurants on your trip</p>
     </div>
 
     <!-- Cruise ship (right) -->
@@ -720,6 +841,25 @@
 
   <div class="panel-add-row">
     <button class="btn btn-ghost" onclick="addRestaurant()">＋ Add Restaurant</button>
+  </div>
+</div>
+
+<!-- Shopping Lists Panel -->
+<div class="panel">
+  <div class="panel-header">
+    <span class="icon">🛒</span>
+    <h2>Shopping Lists</h2>
+  </div>
+
+  <div class="shops-scroll" id="shopsContainer">
+    <div class="empty-state">
+      <span class="big">🏪</span>
+      No stores added yet
+    </div>
+  </div>
+
+  <div class="panel-add-row">
+    <button class="btn btn-ghost" onclick="addStore()">＋ Add Store</button>
   </div>
 </div>
 
@@ -985,6 +1125,141 @@ function updateMeal(i, j, value) {
   save("restaurants", data);
 }
 
+// ===== SHOPPING LISTS =====
+function addStore() {
+  const data = load("stores", []);
+  data.push({ name: "", items: [] });
+  save("stores", data);
+  renderStores();
+  setTimeout(() => {
+    const cards = document.querySelectorAll('.store-card');
+    if (cards.length) cards[cards.length - 1].classList.add('open');
+  }, 10);
+}
+
+function renderStores() {
+  const container = document.getElementById("shopsContainer");
+  const data = load("stores", []);
+
+  if (!data.length) {
+    container.innerHTML = `<div class="empty-state"><span class="big">🏪</span>No stores added yet</div>`;
+    return;
+  }
+
+  container.innerHTML = data.map((store, i) => {
+    const total = store.items.length;
+    const done = store.items.filter(it => it.checked).length;
+    const badge = total > 0 ? `<span class="day-cal-badge">${done}/${total}</span>` : '';
+    return `
+    <div class="store-card" id="store-card-${i}">
+      <div class="store-header" onclick="toggleStore(${i})">
+        <div class="store-dot"></div>
+        <input class="store-name-input" placeholder="Store name"
+          value="${esc(store.name || '')}"
+          onchange="updateStoreName(${i}, this.value)"
+          oninput="updateStoreName(${i}, this.value)"
+          onclick="event.stopPropagation()">
+        ${badge}
+        <span class="day-chevron">▼</span>
+      </div>
+      <div class="store-body">
+        <div class="shop-item-list" id="shop-item-list-${i}">
+          ${store.items.map((item, j) => renderShopItem(i, j, item)).join('')}
+        </div>
+        <div class="store-actions">
+          <button class="btn btn-ghost" onclick="addShopItem(${i})">＋ Add Item</button>
+          <button class="btn-delete-store" onclick="removeStore(${i})">🗑 Delete store</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleStore(i) {
+  document.getElementById(`store-card-${i}`).classList.toggle('open');
+}
+
+function renderShopItem(storeIndex, itemIndex, item) {
+  return `
+  <div class="shop-item">
+    <input type="checkbox" class="shop-item-check"
+      ${item.checked ? 'checked' : ''}
+      onchange="toggleShopItem(${storeIndex},${itemIndex},this.checked)">
+    <input type="text" placeholder="Item name"
+      value="${esc(item.name || '')}"
+      class="${item.checked ? 'checked' : ''}"
+      onchange="updateShopItem(${storeIndex},${itemIndex},this.value)"
+      oninput="updateShopItem(${storeIndex},${itemIndex},this.value)">
+    <button class="btn-remove" onclick="removeShopItem(${storeIndex},${itemIndex})" title="Remove">✕</button>
+  </div>`;
+}
+
+function addShopItem(storeIndex) {
+  const data = load("stores", []);
+  data[storeIndex].items.push({ name: "", checked: false });
+  save("stores", data);
+  document.getElementById(`shop-item-list-${storeIndex}`).innerHTML =
+    data[storeIndex].items.map((it, j) => renderShopItem(storeIndex, j, it)).join('');
+  updateStoreBadge(storeIndex, data[storeIndex].items);
+}
+
+function removeShopItem(storeIndex, itemIndex) {
+  const data = load("stores", []);
+  data[storeIndex].items.splice(itemIndex, 1);
+  save("stores", data);
+  document.getElementById(`shop-item-list-${storeIndex}`).innerHTML =
+    data[storeIndex].items.map((it, j) => renderShopItem(storeIndex, j, it)).join('');
+  updateStoreBadge(storeIndex, data[storeIndex].items);
+}
+
+function updateShopItem(storeIndex, itemIndex, value) {
+  const data = load("stores", []);
+  data[storeIndex].items[itemIndex].name = value;
+  save("stores", data);
+}
+
+function toggleShopItem(storeIndex, itemIndex, checked) {
+  const data = load("stores", []);
+  data[storeIndex].items[itemIndex].checked = checked;
+  save("stores", data);
+  // Update the text input's strikethrough style inline
+  const list = document.getElementById(`shop-item-list-${storeIndex}`);
+  const inputs = list.querySelectorAll('input[type="text"]');
+  if (inputs[itemIndex]) inputs[itemIndex].className = checked ? 'checked' : '';
+  updateStoreBadge(storeIndex, data[storeIndex].items);
+}
+
+function updateStoreName(i, value) {
+  const data = load("stores", []);
+  data[i].name = value;
+  save("stores", data);
+}
+
+function removeStore(i) {
+  const data = load("stores", []);
+  data.splice(i, 1);
+  save("stores", data);
+  renderStores();
+}
+
+function updateStoreBadge(storeIndex, items) {
+  const card = document.getElementById(`store-card-${storeIndex}`);
+  if (!card) return;
+  const total = items.length;
+  const done = items.filter(it => it.checked).length;
+  const existing = card.querySelector('.day-cal-badge');
+  if (existing) {
+    existing.textContent = total > 0 ? `${done}/${total}` : '';
+    if (!total) existing.remove();
+  } else if (total > 0) {
+    const chevron = card.querySelector('.day-chevron');
+    const b = document.createElement('span');
+    b.className = 'day-cal-badge';
+    b.textContent = `${done}/${total}`;
+    card.querySelector('.store-header').insertBefore(b, chevron);
+  }
+}
+
 // ===== UTILS =====
 function esc(str) {
   return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -1000,7 +1275,8 @@ function exportJSON() {
     exported: new Date().toISOString(),
     trip: tripDates,
     days,
-    restaurants
+    restaurants,
+    stores: load("stores", [])
   };
 
   const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "application/json" });
@@ -1025,6 +1301,7 @@ if (saved) {
 }
 renderDays();
 renderRestaurants();
+renderStores();
 </script>
 </body>
 </html>
